@@ -1,0 +1,6 @@
+f=open("dias.txt","w")
+f.write("lune\n")
+f.write("martes\n")
+f.write("miercoles\n")
+f.close()
+print("los dias se han guardado")
