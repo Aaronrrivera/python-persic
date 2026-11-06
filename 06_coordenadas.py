@@ -8,22 +8,35 @@
 
 #segunda version, pedir al usuario coordenadas y mostrar su posicion mas cercana a una de las tiendas
 import math
-
-
-def distancia(p1,p2):
-    return math.hypot(p1[0]-p2[0],p1[1]-p2[1])
+import csv
+coordenadas=[]
 distancias=[]
 
-for c in coordenadas:
-    distancias.append(distancia(c,coordenadas_usuario))
+cont=0
 
-pos_usuario=(int(input("Tu poscicion x:")),int(input("tu posicion y:")))
+with open("coordenadas.csv","r") as f:
+    lector=csv.reader(f)
+    for fila in lector:
+        x=int(fila[0])
+        y=int(fila[1])
+        coordenadas.append((x,y))
 
-distancia_corta=distancia(coordenadas[0],pos_usuario)
+def distancia(p1,p2):
+    distancia=math.hypot(p1[0]-p2[0],p1[1]-p2[1])
+    return distancia
 
-posicion_tienda=coordenadas[0]
-
-for coord in coordenadas.appendas:
-    dist=distancia(coord,pos_usuario)
+pos_usuario=(int(input("tu posicion x: ")), int(input("tu posicion Y: ")))
+dir_fichero="coordenadas.csv"
+distancia_corta=None
+coordenada_tienda=None
+with open(dir_fichero,"r") as f:
+    coordenadas=csv.DictReader(f)
+    for row in coordenadas:
+        if distancia_corta==None:
+            distancia_corta=distancia(row["x"],row["y"],pos_usuario)
+        if coordenada_tienda==None:
+            coordenada_tienda=(row["x"],row["y"])
+    dist=distancia((row["x"],row["y"],pos_usuario))
     if dist<distancia_corta:
-        distancia_corta,coordenada_tienda=dist,coord
+        distancia_corta,coordenada_tienda=dist,(row,["x"],row["y"])
+print(f"la tienda mas cercana a {pos_usuario} tiene coordenadas en {coordenada_tienda}")
