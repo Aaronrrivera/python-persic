@@ -7,6 +7,8 @@ aparecen dos campos de textos (min y max) y un botón que al pulsarlo
 muestra empleados
 """
 import pymongo as pm
+from bson import objectid
+
 def crear_conexion():
     url="mongodb://localhost:27017"
     return py.Mongoclient(url)
@@ -29,4 +31,20 @@ def empleados_por_departamento():
     empleados = list(col_empleados.find({"salario":{"$gte":min,"$lte":max}}))
     serv.close()
     return empleados
+    
+def empleados_todos():
+    serv=crear_conexion()
+    col_empleados=serv.empresa.empleados
+    empleados = list(col_empleados.find())
+    serv.close()
+    return empleados
+    
+def actualizar_empleados(empleados): #[{"empleado":"aaaa","salario":2222,...},]
+    #recibe una lista con todos los empleados y los tiene que actualizar
+    serv=crear_conexion()
+    col_empleados = serv.empresa.empleados
+    for e in empleados:
+        col_empleados.update_one({"_id":ObjectId(e["_id"])},{"$set":{"empleado":e["empleado"],"salario":e["salario"],"edad":e["edad"],"departamento":e["departamento"]}})
+    serv.close()
+    
     

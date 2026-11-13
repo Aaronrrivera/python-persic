@@ -9,7 +9,7 @@ muestra empleados
 import streamlit as st 
 import empleados_repository as repo
 
-tab_nuevo, tab_filtrar_empleados=st.tabs(["nuevo empleado","busqueda de empleados"])
+tab_nuevo, tab_filtrar_empleados,tab_actualizar=st.tabs(["nuevo empleado","busqueda de empleados","actualizar datos"])
 
 with tab_nuevo:
     empleado=st.text_input("Nomvre del empleado: ")
@@ -23,4 +23,10 @@ with tab_nuevo:
 with tab_filtrar_empleados:
     opciones= st.selectbox("filtrar empleados por departamento: ","filtrar empleados por rango salarial")
     if opciones =="filtrar empleados por departamento: ":
-    
+        
+#muestra la tabla con todos los empleados, permitiendo la modificacion de sus datos mediante un boton actualizar, se grabarán los cambios en la base de datos
+resultado=st.data_editor(datos)
+with tab_actualizar:
+    resultado=st.data_editor(repo.empleados(),disabled=["_id"])
+    if st.button("Actualizar")
+    repo.actualizar
