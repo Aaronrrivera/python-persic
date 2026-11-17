@@ -1,5 +1,5 @@
 """
-a partit del documento alumnos.json, calcula la nota media global
+a partir del documento alumnos.json, calcula la nota media global
 muestra nota alta de cada curso y el total de alumnos de cada curso
 
 """

@@ -1,0 +1,32 @@
+'''
+Sobre el archivo de ventas, realizar:
+
+-A partir de nombre de tienda, mostrar sus ventas totales
+
+-Mostrar el mayor gasto de personal de tiendas
+
+-A partir del nombre de tienda, mes en la que esta obtuvo mayor facturación
+'''
+
+import pandas as pd
+tienda=input("Introduzca el nombre de la tienda: ")
+df=pd.read_csv("ventas.csv")
+
+df=df.query("nombre_tienda==@tienda")
+print(f"La facturación total de la tienda{tienda} es {df["facturacion"].sum()}")
+
+#mostrar el mayor gasto del personal de todas las empresas
+dfgrupo=df.groupby("nombre_tiendas").agg(gastos_personas=("gastos_personal","sum"))
+print(dfgrupo["gastos_personal"].max())
+
+#mes en que la tienda obtuvo mayor facturacion
+dfquery=df.query("nombre_tienda==@tienda")
+print(dfquery)
+print(dfquery.sort_values(by="facturacion",ascending=False).iloc[0]).to_dict()["mes"]
+
+#nombre de la tienda mas antigua
+
+dfq=df.query("nombre_tienda==@tienda")
+print(dfq.sort_values(by="antiguedad",ascending=False).iloc[0]).to_dict()["mes"]
+
+
